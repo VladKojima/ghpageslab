@@ -1,7 +1,7 @@
 name: Check pull
 
 on:
-  push:
+  pull_request:
     branches: [master]
 
 jobs:
@@ -21,6 +21,12 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+      
+    - name: Install lint
+      run: npm install eslint eslint-plugin-react eslint-plugin-react-hooks --save-dev
+      
+    - name: Check code
+      run: npx eslint ./src
 
     - name: Install dependencies
       run: npm install
